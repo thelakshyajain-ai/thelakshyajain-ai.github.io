@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TODO_NAME</title>
+<meta name="description" content="TODO_TAGLINE">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+<style>
+  :root {
+    --bg: #fbfbf9;
+    --fg: #1a1a18;
+    --muted: #6b6b66;
+    --rule: #e3e3de;
+    --accent: #2f6f4f;
+    --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111310;
+      --fg: #ececea;
+      --muted: #9a9a94;
+      --rule: #2a2d29;
+      --accent: #6fbf90;
+      --card: #191c19;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111310;
+    --fg: #ececea;
+    --muted: #9a9a94;
+    --rule: #2a2d29;
+    --accent: #6fbf90;
+    --card: #191c19;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: clamp(3rem, 10vw, 6rem) 4rem;
+  }
+
+  header { margin-bottom: 3rem; }
+  h1 {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.4rem;
+  }
+  .tagline {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  section { margin-bottom: 3rem; }
+  h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 0 0 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin: 0 0 1rem; }
+
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .links a {
+    display: inline-block;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: border-color .15s, color .15s;
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
+
+  .card {
+    display: block;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--card);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .15s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card strong { display: block; font-size: 1.02rem; margin-bottom: 0.2rem; }
+  .card span { color: var(--muted); font-size: 0.92rem; }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>TODO_NAME</h1>
+    <p class="tagline">TODO_TAGLINE — a short line about what you do.</p>
+  </header>
+
+  <section>
+    <h2>About</h2>
+    <p>TODO_BIO. Two or three sentences: what you work on, what you care about, what someone landing here should know.</p>
+  </section>
+
+  <section>
+    <h2>Documents</h2>
+    <a class="card" href="pages/">
+      <strong>Published pages</strong>
+      <span>Reports and standalone HTML documents hosted on this site.</span>
+    </a>
+  </section>
+
+  <section>
+    <h2>Elsewhere</h2>
+    <ul class="links">
+      <li><a href="https://github.com/thelakshyajain-ai">GitHub</a></li>
+      <li><a href="TODO_LINKEDIN_URL">LinkedIn</a></li>
+      <li><a href="mailto:TODO_EMAIL">Email</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    Hosted on <a href="https://pages.github.com/">GitHub Pages</a>.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example document</title>
+<style>
+  :root {
+    --bg: #fbfbf9; --fg: #1a1a18; --muted: #6b6b66;
+    --rule: #e3e3de; --accent: #2f6f4f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111310; --fg: #ececea; --muted: #9a9a94;
+      --rule: #2a2d29; --accent: #6fbf90;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111310; --fg: #ececea; --muted: #9a9a94;
+    --rule: #2a2d29; --accent: #6fbf90;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.7 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 42rem; margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: clamp(2.5rem, 8vw, 4.5rem) 4rem;
+  }
+  .back {
+    display: inline-block; margin-bottom: 1.75rem;
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+  }
+  .back:hover { color: var(--accent); }
+  h1 { font-size: clamp(1.6rem, 5vw, 2.1rem); letter-spacing: -0.02em; margin: 0 0 0.3rem; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin: 0 0 2rem; }
+  h2 { font-size: 1.15rem; margin: 2.25rem 0 0.75rem; }
+  p { margin: 0 0 1rem; }
+  .table-scroll { overflow-x: auto; margin-bottom: 1.5rem; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.94rem; }
+  th, td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 600; color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="./">&larr; Documents</a>
+
+  <h1>Example document</h1>
+  <p class="meta">Placeholder — delete this file once you publish something real.</p>
+
+  <p>
+    This page exists to prove the hosting path works. Any self-contained HTML file
+    dropped into <code>pages/</code> is served the same way.
+  </p>
+
+  <h2>A table, for shape</h2>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Status</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Landing page</td><td>Scaffolded</td><td>Placeholders to fill</td></tr>
+        <tr><td>Documents index</td><td>Scaffolded</td><td>Hand-maintained list</td></tr>
+        <tr><td>Pages hosting</td><td>Pending</td><td>Enable after first push</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documents — TODO_NAME</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>">
+<style>
+  :root {
+    --bg: #fbfbf9; --fg: #1a1a18; --muted: #6b6b66;
+    --rule: #e3e3de; --accent: #2f6f4f; --card: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111310; --fg: #ececea; --muted: #9a9a94;
+      --rule: #2a2d29; --accent: #6fbf90; --card: #191c19;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111310; --fg: #ececea; --muted: #9a9a94;
+    --rule: #2a2d29; --accent: #6fbf90; --card: #191c19;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 44rem; margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: clamp(2.5rem, 8vw, 4.5rem) 4rem;
+  }
+
+  .back {
+    display: inline-block; margin-bottom: 1.75rem;
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+  }
+  .back:hover { color: var(--accent); }
+
+  h1 {
+    font-size: clamp(1.6rem, 5vw, 2.1rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 0.4rem;
+  }
+  .lede { color: var(--muted); margin: 0 0 2.5rem; }
+
+  ul.docs { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+  ul.docs a {
+    display: block; padding: 1rem 1.2rem;
+    border: 1px solid var(--rule); border-radius: 10px;
+    background: var(--card); text-decoration: none; color: inherit;
+    transition: border-color .15s;
+  }
+  ul.docs a:hover { border-color: var(--accent); }
+  ul.docs strong { display: block; margin-bottom: 0.2rem; }
+  ul.docs span { color: var(--muted); font-size: 0.9rem; }
+
+  .note {
+    margin-top: 2.5rem; padding: 1rem 1.2rem;
+    border: 1px dashed var(--rule); border-radius: 10px;
+    color: var(--muted); font-size: 0.9rem;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.88em;
+    background: color-mix(in srgb, var(--fg) 7%, transparent);
+    padding: 0.1em 0.35em; border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../">&larr; Back</a>
+
+  <h1>Documents</h1>
+  <p class="lede">Standalone HTML pages hosted on this site.</p>
+
+  <ul class="docs">
+    <li>
+      <a href="example.html">
+        <strong>Example document</strong>
+        <span>Placeholder entry — replace with your first real page.</span>
+      </a>
+    </li>
+  </ul>
+
+  <p class="note">
+    To add a page: drop the <code>.html</code> file in this <code>pages/</code> folder
+    and add a matching <code>&lt;li&gt;</code> above. GitHub Pages serves it at
+    <code>/pages/&lt;filename&gt;.html</code>. This list is hand-maintained — there is no
+    directory scan.
+  </p>
+
+</div>
+</body>
+</html>
