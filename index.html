@@ -1,9 +1,184 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Smart living</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #03060a;
+    color: #e8f1f5;
+    font-family: Oxanium, "Arial Narrow", sans-serif;
+  }
+
+  #bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
-  <h2>Smart Living- A New Era</h2>
-  
+
+<canvas id="bg"></canvas>
+
+<div class="content">
+  <h2>Smart Living - A New Era</h2>
+</div>
+
+<script>
+  const canvas = document.getElementById("bg");
+  const ctx = canvas.getContext("2d");
+
+  const SPACING    = 120;                 // distance between nodes (bigger = fewer lines)
+  const NEIGHBOURS = 3;                   // how many nearby nodes each node links to
+  const COLORS = [
+    { line: "rgba(255, 45, 170, 0.28)", dot: "#ff2daa" },   // neon pink
+    { line: "rgba(40, 150, 255, 0.28)", dot: "#2896ff" }    // neon blue
+  ];
+  const DOT_SPEED  = 70;                  // pixels per second
+  const DOT_SIZE   = 2.2;
+
+  let w, h, nodes, edges, dots;
+  const edgeColor = new Map();
+  let last = performance.now();
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function build() {
+    const dpr = window.devicePixelRatio || 1;
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // 1. nodes on a jittered grid, so they spread evenly
+    nodes = [];
+    for (let x = -SPACING; x < w + SPACING; x += SPACING) {
+      for (let y = -SPACING; y < h + SPACING; y += SPACING) {
+        nodes.push({
+          x: x + (Math.random() - 0.5) * SPACING * 0.7,
+          y: y + (Math.random() - 0.5) * SPACING * 0.7,
+          next: []
+        });
+      }
+    }
+
+    // 2. connect each node to its nearest neighbours (stationary lines)
+    edges = [];
+    edgeColor.clear();
+    const seen = new Set();
+    nodes.forEach((a, i) => {
+      nodes
+        .map((b, j) => ({ j, d: Math.hypot(a.x - b.x, a.y - b.y) }))
+        .filter(o => o.j !== i && o.d < SPACING * 1.8)
+        .sort((p, q) => p.d - q.d)
+        .slice(0, NEIGHBOURS)
+        .forEach(o => {
+          const key = i < o.j ? i + "-" + o.j : o.j + "-" + i;
+          if (seen.has(key)) return;
+          seen.add(key);
+          const c = Math.floor(Math.random() * COLORS.length);
+          edges.push([i, o.j, c]);
+          edgeColor.set(key, c);
+          a.next.push(o.j);
+          nodes[o.j].next.push(i);
+        });
+    });
+
+    // 3. dots that travel along the lines
+    const count = Math.floor(edges.length / 3);
+    dots = Array.from({ length: count }, () => {
+      const [a, b, c] = edges[Math.floor(Math.random() * edges.length)];
+      return { from: a, to: b, t: Math.random(), c };
+    });
+  }
+
+  function step(dt) {
+    for (const d of dots) {
+      const a = nodes[d.from], b = nodes[d.to];
+      const len = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      d.t += (DOT_SPEED * dt) / len;
+
+      if (d.t >= 1) {
+        // arrived at a node: pick a new line to follow (avoid going straight back)
+        const options = b.next.filter(n => n !== d.from);
+        const pick = options.length ? options : b.next;
+        d.from = d.to;
+        d.to = pick[Math.floor(Math.random() * pick.length)];
+        d.t = 0;
+        d.c = edgeColor.get(d.from < d.to ? d.from + "-" + d.to : d.to + "-" + d.from);
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    // stationary lines, drawn one colour at a time
+    ctx.lineWidth = 1;
+    COLORS.forEach((col, ci) => {
+      ctx.strokeStyle = col.line;
+      ctx.beginPath();
+      for (const [i, j, c] of edges) {
+        if (c !== ci) continue;
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+      }
+      ctx.stroke();
+    });
+
+    // moving dots with a soft glow
+    ctx.shadowBlur = 10;
+    for (const d of dots) {
+      ctx.fillStyle = ctx.shadowColor = COLORS[d.c].dot;
+      const a = nodes[d.from], b = nodes[d.to];
+      const x = a.x + (b.x - a.x) * d.t;
+      const y = a.y + (b.y - a.y) * d.t;
+      ctx.beginPath();
+      ctx.arc(x, y, DOT_SIZE, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+  }
+
+  function loop(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    step(dt);
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener("resize", build);
+  build();
+  if (reduceMotion) draw();   // people who prefer less motion get a still background
+  else requestAnimationFrame(loop);
+</script>
+
 </body>
+</html>
